@@ -13,6 +13,17 @@ int main() {
          << endl;
     cout << endl;
 
+    cout << "=== Test default constructor" << endl;
+    Records::Employee emp;
+    cout << "-- default values" << endl;
+    cout << "First Name: " << emp.getFirstName() << "\n"
+         << "Last Name: " << emp.getLastName() << "\n"
+         << "Employee Number: " << emp.getEmployeeNumber() << "\n"
+         << "Salary: " << emp.getSalary() << "\n"
+         << "IsHired: " << emp.isHired()
+         << endl;
+    cout << endl;
+
 
     return 0;
 
