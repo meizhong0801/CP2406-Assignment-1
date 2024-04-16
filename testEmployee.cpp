@@ -59,6 +59,11 @@ int main() {
     emp.hire();
     emp.display();
 
+    cout << "=== Test promote method" << endl;
+    cout << "-- Promote this employee" << endl;
+    emp.promote(1000);
+    emp.display();
+
     return 0;
 
 }
