@@ -64,6 +64,13 @@ int main() {
     emp.promote(1000);
     emp.display();
 
+    cout << "=== Test demote method" << endl;
+    cout << "-- demote this employee" << endl;
+    emp.demote(5000);
+    emp.display();
+
+    cout << "=== End Test" << endl;
+
     return 0;
 
 }
