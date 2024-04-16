@@ -24,6 +24,18 @@ int main() {
          << endl;
     cout << endl;
 
+    cout << "=== Test setters" << endl;
+    emp.setFirstName("John");
+	emp.setLastName("Doe");
+	emp.setEmployeeNumber(71);
+    emp.setSalary(50000);
+    cout << "First Name: " << emp.getFirstName() << "\n"
+         << "Last Name: " << emp.getLastName() << "\n"
+         << "Employee Number: " << emp.getEmployeeNumber() << "\n"
+         << "Salary: " << emp.getSalary()
+         << endl;
+    cout << endl;
+
 
     return 0;
 
