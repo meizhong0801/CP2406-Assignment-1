@@ -50,7 +50,14 @@ int main() {
     cout << "Is hired: " << emp.isHired() << endl;
     cout << endl;
 
-
+    cout << "=== Test display methods" << endl;
+    emp.display();
+    cout << "-- Fire this employee" << endl;
+    emp.fire();
+    emp.display();
+    cout << "-- Hire this employee again" << endl;
+    emp.hire();
+    emp.display();
 
     return 0;
 
