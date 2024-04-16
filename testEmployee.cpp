@@ -36,6 +36,21 @@ int main() {
          << endl;
     cout << endl;
 
+    cout << "=== Test hire related methods" << endl;
+    cout << "-- Default isHired value" << endl;
+    cout << "Is hired: " << emp.isHired() << endl;
+    cout << "-- Hire this employee" << endl;
+    emp.hire();
+    cout << "Is hired: " << emp.isHired() << endl;
+    cout << "-- Fire this employee" << endl;
+    emp.fire();
+    cout << "Is hired: " << emp.isHired() << endl;
+    cout << "-- Hire this employee again" << endl;
+    emp.hire();
+    cout << "Is hired: " << emp.isHired() << endl;
+    cout << endl;
+
+
 
     return 0;
 
