@@ -2,21 +2,26 @@
 #include <stdexcept>
 #include <exception>
 #include "Database.h"
+#include <fstream>
+#include <vector>
+#include <string>
 
 using namespace std;
 using namespace Records;
 
+// declare functions
 int displayMenu();
 void doHire(Database& db);
 void doFire(Database& db);
 void doPromote(Database& db);
 void doDemote(Database& db);
+void generateNewDatabase(Database& db);
+vector<string> readData(string filename);
 
-int main()
-{
-	Database employeeDB;
-
-	bool done = false;
+int main() {
+    Database employeeDB;
+    
+ 	bool done = false;
 	while (!done) {
 		int selection = displayMenu();
 		switch (selection) {
@@ -41,18 +46,24 @@ int main()
 		case 6:
 			employeeDB.displayFormer();
 			break;
+        case 7:
+			generateNewDatabase(employeeDB);
+			break;  
 		default:
 			cerr << "Unknown command." << endl;
 			break;
 		}
 	}
 
-	return 0;
+
+
+
+    return 0;
+
 }
 
-int displayMenu()
-{
-	// Note:
+int displayMenu() {
+    // Note:
 	//		One important note is that this code assumes that the user will
 	//		"play nice" and type a number when a number is requested.
 	//		When you read about I/O in Chapter 13, you will learn how to
@@ -60,7 +71,6 @@ int displayMenu()
 
     int selection;
 
-    cout << endl;
     cout << "Employee Database" << endl;
     cout << "-----------------" << endl;
     cout << "1) Hire a new employee" << endl;
@@ -69,26 +79,33 @@ int displayMenu()
     cout << "4) List all employees" << endl;
     cout << "5) List all current employees" << endl;
     cout << "6) List all former employees" << endl;
+    cout << "7) Generate new database" << endl;
     cout << "0) Quit" << endl;
     cout << endl;
     cout << "---> ";
-    
-	cin >> selection;
-    
-	return selection;
+
+    cin >> selection;
+
+    return selection;
 }
 
 void doHire(Database& db)
 {
     string firstName;
     string lastName;
+    string middleName;
+    string address;
 
     cout << "First name? ";
     cin >> firstName;
     cout << "Last name? ";
     cin >> lastName;
+    cout << "Middle name? ";
+    cin >> middleName;
+    cout << "Address? ";
+    cin >> address;
     
-    db.addEmployee(firstName, lastName);
+    db.addEmployee(firstName, lastName, middleName, address);
 }
 
 void doFire(Database& db)
@@ -99,7 +116,7 @@ void doFire(Database& db)
     cin >> employeeNumber;
 
     try {
-        Employee& emp = db.getEmployeeByNumber(employeeNumber);
+        Employee& emp = db.getEmployee(employeeNumber);
         emp.fire();
         cout << "Employee " << employeeNumber << " terminated." << endl;
     } catch (const std::logic_error& exception) {
@@ -118,9 +135,46 @@ void doPromote(Database& db)
     cin >> raiseAmount;
 
     try {
-        Employee& emp = db.getEmployeeByNumber(employeeNumber);
+        Employee& emp = db.getEmployee(employeeNumber);
         emp.promote(raiseAmount);
     } catch (const std::logic_error& exception) {
         cerr << "Unable to promote employee: " << exception.what() << endl;
     }
 }
+
+void generateNewDatabase(Database& db) {
+
+    vector<string> firstNames = readData("./names/firstnames.txt");
+    vector<string> middleNames = readData("./names/middlenames.txt");
+    vector<string> lastNames = readData("./names/lastnames.txt");
+    vector<string> numbers = readData("./names/numbers.txt");
+    vector<string> streetNames = readData("./names/streetnames.txt");
+    vector<string> cities = readData("./names/cities.txt");
+
+    // generate 8000 names
+    for (int i = 0; i < 20; i++) {
+        for (int j = 0; j < 20; j++) {
+            for (int k = 0; k < 20; k++) {
+                string address = numbers[k] + " " + streetNames[j] + " " + cities[i];
+                db.addEmployee(firstNames[i], lastNames[k], middleNames[j], address);
+            }
+        }
+    }
+
+    cout << "8000 employees have been created and added to database. \n" << endl;
+}
+
+vector<string> readData(string filename) {
+    vector<string> names;
+    ifstream nameFile(filename);
+    if (!nameFile.is_open()) {
+        throw runtime_error {"Error while opening file."};
+    }
+    string line;
+    while ( getline (nameFile, line) ) {
+        names.push_back(line);
+    }
+
+    return names;
+}
+
