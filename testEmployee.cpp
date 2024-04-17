@@ -13,6 +13,15 @@ int main() {
          << endl;
     cout << endl;
 
+    cout << "=== Test constructor with 4 parameters" << endl;
+    Records::Employee emp4("John", "M1", "Doe", "fake address");
+    cout << "First Name: " << emp4.getFirstName() << "\n"
+         << "Middle Name: " << emp4.getMiddleName() << "\n"
+         << "Last Name: " << emp4.getLastName() << "\n"
+         << "Address: " << emp4.getAddress()
+         << endl;
+    cout << endl;
+
     cout << "=== Test default constructor" << endl;
     Records::Employee emp;
     cout << "-- default values" << endl;
@@ -72,5 +81,4 @@ int main() {
     cout << "=== End Test" << endl;
 
     return 0;
-
 }
