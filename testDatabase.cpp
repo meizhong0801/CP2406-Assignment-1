@@ -35,7 +35,14 @@ int main()
     } catch (const exception& e) {
         cout << e.what() << endl;
     }
-
+    cout << endl;
+    cout << "-- Get employee by employee number " << endl;
+    try {
+        Employee emp = myDB.getEmployee(1000);
+        emp.display();
+    } catch (const exception& e) {
+        cout << e.what() << endl;
+    }
 
     // Test Database class display methods
     cout << endl;
@@ -48,6 +55,10 @@ int main()
     
 	cout << endl << "former employees: " << endl << endl;
     myDB.displayFormer();
+    cout << "=== Test addEmployee method ===" << endl;
+    Database myDB1;
+	myDB1.addEmployee("Greg", "Wallis", "Mn1", "address");
+    myDB1.displayAll();
     
 	return 0;
 }
