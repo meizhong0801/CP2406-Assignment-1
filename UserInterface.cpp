@@ -19,6 +19,7 @@ void generateNewDatabase(Database& db);
 vector<string> readData(string filename);
 void doSave(Database& db);
 void doLoad(Database& db);
+void doEdit(Database& db);
 
 int main() {
     Database employeeDB;
@@ -57,7 +58,9 @@ int main() {
         case 9:
 			doLoad(employeeDB);
 			break;  
-
+        case 10:
+			doEdit(employeeDB);
+			break;  
 		default:
 			cerr << "Unknown command." << endl;
 			break;
@@ -91,6 +94,7 @@ int displayMenu() {
     cout << "7) Generate new database" << endl;
     cout << "8) Save database to file" << endl;
     cout << "9) Load database from file" << endl;
+    cout << "10) Edit employee" << endl;
     cout << "0) Quit" << endl;
     cout << endl;
     cout << "---> ";
@@ -214,6 +218,28 @@ void doLoad(Database& db) {
     cin >> filename;
 
     db.load(filename);
+}
+
+void doEdit(Database& db) {
+    
+    string employeeNumber, address, salary, hired;
+    bool ishired;
+
+    cout << "employee number? ";
+    cin >> employeeNumber;
+    cout << "address? ";
+    cin >> address;
+    cout << "salary? ";
+    cin >> salary;
+    cout << "hired? 1 for YES and others for NO ";
+    cin >> hired;
+
+    if (hired == "1") {
+        db.editEmployee(stoi(employeeNumber), address, stoi(salary), true);
+    } else {
+        db.editEmployee(stoi(employeeNumber), address, stoi(salary), false);
+    }
+
 }
 
 
