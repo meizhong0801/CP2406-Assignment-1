@@ -20,6 +20,7 @@ vector<string> readData(string filename);
 void doSave(Database& db);
 void doLoad(Database& db);
 void doEdit(Database& db);
+void doSearch(Database& db);
 
 int main() {
     Database employeeDB;
@@ -61,6 +62,9 @@ int main() {
         case 10:
 			doEdit(employeeDB);
 			break;  
+        case 11:
+			doSearch(employeeDB);
+			break;  
 		default:
 			cerr << "Unknown command." << endl;
 			break;
@@ -95,6 +99,7 @@ int displayMenu() {
     cout << "8) Save database to file" << endl;
     cout << "9) Load database from file" << endl;
     cout << "10) Edit employee" << endl;
+    cout << "11) Search employee" << endl;
     cout << "0) Quit" << endl;
     cout << endl;
     cout << "---> ";
@@ -131,7 +136,7 @@ void doFire(Database& db)
     cin >> employeeNumber;
 
     try {
-        Employee& emp = db.getEmployee(employeeNumber);
+        Employee& emp = db.getEmployeeByNumber(employeeNumber);
         emp.fire();
         cout << "Employee " << employeeNumber << " terminated." << endl;
     } catch (const std::logic_error& exception) {
@@ -150,7 +155,7 @@ void doPromote(Database& db)
     cin >> raiseAmount;
 
     try {
-        Employee& emp = db.getEmployee(employeeNumber);
+        Employee& emp = db.getEmployeeByNumber(employeeNumber);
         emp.promote(raiseAmount);
     } catch (const std::logic_error& exception) {
         cerr << "Unable to promote employee: " << exception.what() << endl;
@@ -241,5 +246,39 @@ void doEdit(Database& db) {
     }
 
 }
+
+void doSearch(Database& db) {
+    
+    string where, what;
+    bool ishired;
+
+    cout << "How to search? 1-firstname, 2-lastname, 3-middle name, 4-address: ";
+    cin >> where;
+    cout << "search what? ";
+    cin >> what;
+
+    if (where == "1") {
+        where = "firstName";
+    } else if (where == "2") {
+        where = "lastName";
+    } else if (where == "3") {
+        where = "middleName";
+    } else if (where == "4") {
+        where = "address";
+    } 
+
+
+    cout << endl;
+    auto searchResult = db.searchEmployee(what, where);
+    cout << "*** Search result: ***" << endl;
+    cout << "--------------------" << endl;
+    cout << searchResult.size() << " employees found." << endl;
+    cout << "--------------------" << endl;
+    for (auto employee : searchResult) {
+        employee.display();
+    }
+
+}
+
 
 
