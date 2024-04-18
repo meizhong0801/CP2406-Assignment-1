@@ -4,6 +4,8 @@
 #include <vector>
 #include "Employee.h"
 
+using namespace std;
+
 namespace Records {
     const int kFirstEmployeeNumber = 1000;
 
@@ -14,11 +16,12 @@ namespace Records {
 								  const std::string& middleName="",
 								  const std::string& address=""); // middleName and address has default value ""
             Employee& getEmployee(int employeeNumber);
-            Employee& getEmployee(const std::string& firstName,
-                                  const std::string& LastName);
+            Employee& getEmployee(const string& firstName,
+                                  const string& LastName);
             void displayAll() const;
             void displayCurrent() const;
             void displayFormer() const;
+            void save(const string& filename, bool isOverwriting) const;
 
         private: 
             std::vector<Employee> mEmployees;
