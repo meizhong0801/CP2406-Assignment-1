@@ -17,6 +17,7 @@ void doPromote(Database& db);
 void doDemote(Database& db);
 void generateNewDatabase(Database& db);
 vector<string> readData(string filename);
+void doSave(Database& db);
 
 int main() {
     Database employeeDB;
@@ -48,7 +49,11 @@ int main() {
 			break;
         case 7:
 			generateNewDatabase(employeeDB);
+			break; 
+        case 8:
+			doSave(employeeDB);
 			break;  
+ 
 		default:
 			cerr << "Unknown command." << endl;
 			break;
@@ -80,6 +85,7 @@ int displayMenu() {
     cout << "5) List all current employees" << endl;
     cout << "6) List all former employees" << endl;
     cout << "7) Generate new database" << endl;
+    cout << "8) Save database to file" << endl;
     cout << "0) Quit" << endl;
     cout << endl;
     cout << "---> ";
@@ -104,7 +110,7 @@ void doHire(Database& db)
     cin >> middleName;
     cout << "Address? ";
     cin >> address;
-    
+
     db.addEmployee(firstName, lastName, middleName, address);
 }
 
@@ -178,3 +184,20 @@ vector<string> readData(string filename) {
     return names;
 }
 
+
+
+void doSave(Database& db) {
+    string filename;
+    string overwritting;
+
+    cout << "filename? ";
+    cin >> filename;
+    cout << "overwritting? 1 for YES and others for NO ";
+    cin >> overwritting;
+
+    if (overwritting == "1") {
+        db.save(filename, true);
+    } else {
+        db.save(filename, false);
+    }
+}
