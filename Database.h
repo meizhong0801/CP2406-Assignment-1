@@ -23,6 +23,7 @@ namespace Records {
             void displayFormer() const;
             void save(const string& filename, bool isOverwriting) const;
             void load(const string& filename);
+            void editEmployee(int employeeNumber, const string& address, int salary, bool hired);
 
         private: 
             std::vector<Employee> mEmployees;

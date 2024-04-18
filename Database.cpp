@@ -45,7 +45,6 @@ namespace Records {
 		throw logic_error("No employee found.");
 	}
 
-
     void Database::displayAll() const
 	{
 		for (const auto& employee : mEmployees) {
@@ -131,6 +130,33 @@ namespace Records {
 					theEmployee.fire();
 				}
 				mEmployees.push_back(theEmployee);
+			}
+		}
+	}
+
+
+	void Database::editEmployee(int employeeNumber, const string& address, int salary, bool hired) {
+		for (int i = 0; i < mEmployees.size(); i++) {
+			if (mEmployees[i].getEmployeeNumber() == employeeNumber) {
+				// Create new Employee object
+				Employee newEmployee;
+				newEmployee.setFirstName(mEmployees[i].getFirstName());
+				newEmployee.setLastName(mEmployees[i].getLastName());
+				newEmployee.setMiddleName(mEmployees[i].getMiddleName());
+				newEmployee.setEmployeeNumber(mEmployees[i].getEmployeeNumber());
+				newEmployee.setAddress(address);
+				newEmployee.setSalary(salary);
+				newEmployee.setAddress(address);
+				if (hired) {
+					newEmployee.hire();
+				} else {
+					newEmployee.fire();
+				}
+				
+				// delete current employee from mEmployees vector
+				mEmployees.erase(mEmployees.begin() + i);
+				// Insert edited employee in the original position
+				mEmployees.insert(mEmployees.begin() + i, newEmployee);
 			}
 		}
 	}

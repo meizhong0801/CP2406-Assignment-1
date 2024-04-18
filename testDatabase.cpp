@@ -45,7 +45,6 @@ int main()
         cout << e.what() << endl;
     }
 
-
     // Test Database class display methods
     cout << endl;
     cout << "=== Test display methods ===" << endl;
@@ -58,11 +57,12 @@ int main()
 	cout << endl << "former employees: " << endl << endl;
     myDB.displayFormer();
 
-
+    cout << endl;
     cout << "=== Test addEmployee method ===" << endl;
 	myDB.addEmployee("Greg", "Wallis", "Mn1", "address");
     myDB.displayAll();
 
+    cout << endl;
     cout << "=== Test save method ===" << endl;
     cout << "--- Test overwritting" << endl;
     try {
@@ -79,11 +79,21 @@ int main()
     //     cout << e.what() << endl;
     // }
 
+    cout << endl;
     cout << "=== Test load method === " << endl;
     Database myDB1;
     myDB1.load("employee.db");
     myDB1.displayAll();
-    
+
+    cout << endl;
+    cout << "=== Test editEmployee method === " << endl;
+    Database myDB2;
+    myDB2.addEmployee("Greg", "Wallis", "mName", "address1");
+    cout << "--- Initial status: " << endl;
+    myDB2.displayAll();
+    myDB2.editEmployee(1000, "address200", 45000, false);
+    cout << "--- After edit: " << endl;
+    myDB2.displayAll();
 
     
 	return 0;
