@@ -18,6 +18,7 @@ void doDemote(Database& db);
 void generateNewDatabase(Database& db);
 vector<string> readData(string filename);
 void doSave(Database& db);
+void doLoad(Database& db);
 
 int main() {
     Database employeeDB;
@@ -53,7 +54,10 @@ int main() {
         case 8:
 			doSave(employeeDB);
 			break;  
- 
+        case 9:
+			doLoad(employeeDB);
+			break;  
+
 		default:
 			cerr << "Unknown command." << endl;
 			break;
@@ -86,6 +90,7 @@ int displayMenu() {
     cout << "6) List all former employees" << endl;
     cout << "7) Generate new database" << endl;
     cout << "8) Save database to file" << endl;
+    cout << "9) Load database from file" << endl;
     cout << "0) Quit" << endl;
     cout << endl;
     cout << "---> ";
@@ -201,3 +206,14 @@ void doSave(Database& db) {
         db.save(filename, false);
     }
 }
+
+void doLoad(Database& db) {
+    string filename;
+
+    cout << "filename? ";
+    cin >> filename;
+
+    db.load(filename);
+}
+
+
