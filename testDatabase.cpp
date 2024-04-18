@@ -20,9 +20,9 @@ int main()
     emp3.promote();
 
     cout << "=== Test getEmployee method ===" << endl;
-    cout << "-- Get employee named as 'Jone Doe' " << endl;
+    cout << "-- Get employee by employee number 1000 " << endl;
     try {
-        Employee emp = myDB.getEmployee("John", "Doe");
+        Employee emp = myDB.getEmployee(1000);
         emp.display();
     } catch (const exception& e) {
         cout << e.what() << endl;
@@ -36,14 +36,6 @@ int main()
         cout << e.what() << endl;
     }
 
-    cout << endl;
-    cout << "-- Get employee by employee number " << endl;
-    try {
-        Employee emp = myDB.getEmployee(1000);
-        emp.display();
-    } catch (const exception& e) {
-        cout << e.what() << endl;
-    }
 
     // Test Database class display methods
     cout << endl;
@@ -95,6 +87,23 @@ int main()
     cout << "--- After edit: " << endl;
     myDB2.displayAll();
 
+    cout << endl;
+    cout << "=== Test searchEmployee method === " << endl;
+    myDB.addEmployee("mia", "Smith", "middle", "000000");
+    myDB.addEmployee("mia", "Smarth", "middle", "000000");
+    myDB.addEmployee("mia", "aasm", "middle", "000000");
+    myDB.addEmployee("mia", "1sm", "middle", "000000");
+    cout << "--- All employees: " << endl;
+    myDB.displayAll();
+    cout << endl;
+    cout << "*** Search result: ***" << endl;
+    auto searchResult = myDB.searchEmployee("Sm", "lastName");
+    cout << "--------------------" << endl;
+    cout << searchResult.size() << " employees found." << endl;
+    cout << "--------------------" << endl;
+    for (auto employee : searchResult) {
+        employee.display();
+    }
     
 	return 0;
 }

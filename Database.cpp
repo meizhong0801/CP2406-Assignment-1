@@ -3,7 +3,10 @@
 #include <fstream>
 #include <sstream>
 #include <iomanip>
+#include <cctype>
+#include <ctype.h>
 #include "Database.h"
+#include "helper.cpp"
 
 using namespace std;
 
@@ -22,18 +25,15 @@ namespace Records {
 
     }
 
-	// get employee by emplyee number
-	Employee& Database::getEmployee(int employeeNumber)
-	{
+	Employee& Database::getEmployee(int employeeNumber) {
 		for (auto& employee : mEmployees) {
 			if (employee.getEmployeeNumber() == employeeNumber) {
-				return employee;
+					return employee;
 			}
 		}
 		throw logic_error("No employee found.");
 	}
 
-	// get employee by emplyee firstname and last name
     Employee& Database::getEmployee(const string& firstName, const string& lastName)
 	{
 		for (auto& employee : mEmployees) {
@@ -44,6 +44,17 @@ namespace Records {
 		}
 		throw logic_error("No employee found.");
 	}
+
+    Employee& Database::getEmployeeByNumber(const int employeeNumber)
+	{
+		for (auto& employee : mEmployees) {
+			if (employee.getEmployeeNumber() == employeeNumber) {
+					return employee;
+			}
+		}
+		throw logic_error("No employee found.");
+	}
+
 
     void Database::displayAll() const
 	{
@@ -161,4 +172,34 @@ namespace Records {
 		}
 	}
 
+	vector<Employee> Database::searchEmployee(string searchWord, const string& where) const 
+	{
+		vector<Employee> result ;
+		string searchWordUpper = toUpper(searchWord);
+		
+		for (auto employee : mEmployees) {
+			string whereUpper = "";
+			if (toUpper(where) == "FIRSTNAME") {
+				// convert firstname to uppercase
+				whereUpper = toUpper(employee.getFirstName());
+			} 
+			else if (where == "lastName") {
+				// convert to uppercase
+				whereUpper = toUpper(employee.getLastName());
+			} 
+			else if (where == "middleName") {
+				// convert to uppercase
+				whereUpper = toUpper(employee.getMiddleName());
+			} 
+			else if (where == "address") {
+				// convert to uppercase
+				whereUpper = toUpper(employee.getAddress());
+			} 
+
+			if (whereUpper.find(searchWordUpper) != string::npos) {
+					result.push_back(employee);
+			}
+		}
+		return result;
+	}
 }
