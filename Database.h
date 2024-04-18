@@ -22,6 +22,7 @@ namespace Records {
             void displayCurrent() const;
             void displayFormer() const;
             void save(const string& filename, bool isOverwriting) const;
+            void load(const string& filename);
 
         private: 
             std::vector<Employee> mEmployees;

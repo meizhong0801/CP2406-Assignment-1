@@ -1,9 +1,8 @@
 #include <iostream>
 #include <stdexcept>
 #include <fstream>
+#include <sstream>
 #include <iomanip>
-// #include <string_view>
-// #include <sstream>
 #include "Database.h"
 
 using namespace std;
@@ -84,16 +83,54 @@ namespace Records {
     	}
 
 		for (const auto&  employee : mEmployees) {
-			outfile << employee.getEmployeeNumber()
-					<< quoted(employee.getFirstName())
-					<< quoted(employee.getLastName())
-					<< quoted(employee.getMiddleName())
-					<< quoted(employee.getAddress())
-					<< employee.getSalary()
-					<< employee.isHired()
+			outfile << employee.getEmployeeNumber() << " "
+					<< quoted(employee.getFirstName()) << " "
+					<< quoted(employee.getLastName()) << " "
+					<< quoted(employee.getMiddleName()) << " "
+					<< quoted(employee.getAddress()) << " "
+					<< employee.getSalary() << " "
+					<< quoted(to_string(employee.isHired()))
 					<< endl;
 			if(!outfile) {
 				throw std::runtime_error {"Error: Fail to write to file."};
+			}
+		}
+	}
+
+	void Database::load(const string& filename) {
+		ifstream infile(filename.data());
+		if (!infile)
+		{
+			throw std::runtime_error {"Cannot open file."};
+		}
+		while (infile) {
+			std::string line, employeeNumber, firstName, lastName, middleName, address, salary, hired;
+			std::getline(infile, line);
+			if (!infile && !infile.eof()) {
+				throw std::runtime_error {"Failed to read line from file."};
+			}
+			
+			if (!line.empty())
+			{
+				std::istringstream inLine{line};
+				inLine >> employeeNumber 
+					   >> quoted(firstName) 
+					   >> quoted(lastName) 
+					   >> quoted(middleName)
+					   >> quoted(address)
+					   >> salary
+					   >> hired;
+				// inLine >> first_name >> last_name >> initials;
+				
+				Employee theEmployee(firstName, middleName, lastName, address);
+				theEmployee.setSalary(stoi(salary));
+				theEmployee.setEmployeeNumber(stoi(employeeNumber));
+				if (hired == "1") {
+					theEmployee.hire();
+				} else {
+					theEmployee.fire();
+				}
+				mEmployees.push_back(theEmployee);
 			}
 		}
 	}

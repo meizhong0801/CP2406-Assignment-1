@@ -59,27 +59,32 @@ int main()
     myDB.displayFormer();
 
 
-    // cout << "=== Test addEmployee method ===" << endl;
-	// myDB.addEmployee("Greg", "Wallis", "Mn1", "address");
-    // myDB.displayAll();
+    cout << "=== Test addEmployee method ===" << endl;
+	myDB.addEmployee("Greg", "Wallis", "Mn1", "address");
+    myDB.displayAll();
 
-    // cout << "=== Test save method ===" << endl;
-    // cout << "--- Test overwritting" << endl;
+    cout << "=== Test save method ===" << endl;
+    cout << "--- Test overwritting" << endl;
+    try {
+        myDB.save("employee.db", true);
+        myDB.displayAll();
+    } catch (const exception e) {
+        cout << e.what() << endl;
+    }
+    // cout << "--- Test append" << endl;
     // try {
-    //     myDB.save("employee.db", true);
+    //     myDB.save("employee.db", false);
     //     myDB.displayAll();
     // } catch (const exception e) {
     //     cout << e.what() << endl;
     // }
 
-    cout << "--- Test append" << endl;
-    try {
-        myDB.save("employee.db", false);
-        myDB.displayAll();
-    } catch (const exception e) {
-        cout << e.what() << endl;
-    }
+    cout << "=== Test load method === " << endl;
+    Database myDB1;
+    myDB1.load("employee.db");
+    myDB1.displayAll();
+    
 
-
+    
 	return 0;
 }
