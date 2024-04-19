@@ -25,7 +25,8 @@ namespace Records {
 
     }
 
-	Employee& Database::getEmployee(int employeeNumber) {
+	Employee& Database::getEmployee(int employeeNumber)
+	{
 		for (auto& employee : mEmployees) {
 			if (employee.getEmployeeNumber() == employeeNumber) {
 					return employee;
@@ -33,6 +34,7 @@ namespace Records {
 		}
 		throw logic_error("No employee found.");
 	}
+
 
     Employee& Database::getEmployee(const string& firstName, const string& lastName)
 	{
@@ -130,17 +132,15 @@ namespace Records {
 					   >> quoted(address)
 					   >> salary
 					   >> hired;
-				// inLine >> first_name >> last_name >> initials;
 				
-				Employee theEmployee(firstName, middleName, lastName, address);
+				Employee& theEmployee = addEmployee(firstName, middleName, lastName, address);
 				theEmployee.setSalary(stoi(salary));
-				theEmployee.setEmployeeNumber(stoi(employeeNumber));
 				if (hired == "1") {
 					theEmployee.hire();
 				} else {
 					theEmployee.fire();
 				}
-				mEmployees.push_back(theEmployee);
+				
 			}
 		}
 	}
@@ -202,4 +202,9 @@ namespace Records {
 		}
 		return result;
 	}
+
+
+
+	
+
 }
